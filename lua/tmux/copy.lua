@@ -1,6 +1,6 @@
 local api = vim.api
 
-local options = require('tmux.configuration').options
+local options = require('tmux.config').options
 local tmux = require('tmux.tmux')
 
 local function rtc(str)

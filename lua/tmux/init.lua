@@ -1,4 +1,4 @@
-local config = require('tmux.configuration')
+local config = require('tmux.config')
 local tmux = require('tmux.tmux')
 
 local options = config.options
