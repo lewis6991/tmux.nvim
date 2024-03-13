@@ -122,9 +122,6 @@ function M.setup(user_options)
   local copy = require('tmux.copy')
   copy.setup()
 
-  M.post_yank = copy.post_yank
-  M.sync_registers = copy.sync_registers
-
   local function nmap(l, r)
     vim.keymap.set('n', l, r, { nowait = true, silent = true })
   end

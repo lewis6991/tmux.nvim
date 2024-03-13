@@ -18,6 +18,7 @@ local function tointeger(x)
   return assert(tonumber(x) --[[@as integer]])
 end
 
+--- @param display string
 --- @return tmux.layout?
 local function parse(display)
   if display == '' or not display then
@@ -25,6 +26,8 @@ local function parse(display)
   end
 
   local panes = {} --- @type tmux.pane[]
+
+  --- @diagnostic disable-next-line:no-unknown
   for width, height, x, y, id in display:gmatch('(%d+)x(%d+),(%d+),(%d+),(%d+)') do
     panes[#panes + 1] = {
       id = tointeger(id),
@@ -84,7 +87,8 @@ end
 
 local M = {}
 
----@param direction 'h'|'j'|'k'|'l'
+--- @param direction 'h'|'j'|'k'|'l'
+--- @return boolean?
 function M.is_border(direction)
   local display = tmux.get_window_layout()
   local id = tmux.get_current_pane_id()

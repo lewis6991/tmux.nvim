@@ -47,7 +47,7 @@ end
 --- @param regcontents string[]
 --- @return string
 local function resolve_content(regtype, regcontents)
-  local result = {}
+  local result = {} --- @type string[]
   for index, value in ipairs(regcontents) do
     if index > 1 then
       result[#result + 1] = '\n'

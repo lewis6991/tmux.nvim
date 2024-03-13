@@ -1,5 +1,3 @@
-local vim = vim
-
 local tmux_directions = {
   h = 'L',
   j = 'D',
@@ -43,10 +41,13 @@ function M.setup()
   return M.is_tmux
 end
 
+--- @param direction 'h'|'j'|'k'|'l'
 function M.change_pane(direction)
   execute({ 'select-pane', '-t', get_tmux_pane(), '-' .. tmux_directions[direction] })
 end
 
+--- @param name string
+--- @return string
 function M.get_buffer(name)
   return execute({ 'show-buffer', '-b', name })
 end
@@ -54,7 +55,7 @@ end
 function M.get_buffer_names()
   local buffers = execute({ 'list-buffers', '-F', '#{buffer_name}' })
 
-  local result = {}
+  local result = {} --- @type string[]
   for line in buffers:gmatch('([^\n]+)\n?') do
     result[#result + 1] = line
   end
@@ -77,10 +78,14 @@ function M.is_zoomed()
   return execute({ 'display-message', '-p', '#{window_zoomed_flag}' }):find('1') ~= nil
 end
 
+--- @param direction 'h'|'j'|'k'|'l'
+--- @param step integer
 function M.resize(direction, step)
-  execute({ 'resize-pane', '-t', get_tmux_pane(), '-' .. tmux_directions[direction], step })
+  execute({ 'resize-pane', '-t', get_tmux_pane(), '-' .. tmux_directions[direction], tostring(step) })
 end
 
+--- @param content string
+--- @param sync_clipboard boolean
 function M.set_buffer(content, sync_clipboard)
   content = content:gsub('\\', '\\\\')
   content = content:gsub('"', '\\"')
