@@ -115,16 +115,15 @@ function M.resize_right()
   end
 end
 
+local function nmap(l, r)
+  vim.keymap.set('n', l, r, { nowait = true, silent = true })
+end
+
+--- @param user_options? tmux.config
 function M.setup(user_options)
   tmux.setup()
   config.setup(user_options)
 
-  local copy = require('tmux.copy')
-  copy.setup()
-
-  local function nmap(l, r)
-    vim.keymap.set('n', l, r, { nowait = true, silent = true })
-  end
 
   if options.resize.enable_default_keybindings then
     nmap('<A-h>', M.resize_left)
